@@ -1,23 +1,20 @@
 package produccion;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.net.http.HttpResponse;
+import java.nio.file.attribute.FileOwnerAttributeView;
+import java.util.ArrayList;
 public class GUI extends JFrame {
-
     private final int HEIGHT_GAME = 650, WIDTH_GAME = 950;
-
-    public int getHEIGHT_GAME() {
-        return HEIGHT_GAME;
-    }
-
-    public int getWIDTH_GAME() {
-        return WIDTH_GAME;
-    }
 
     private GameContent gameContent;
     public GUI(){
         setTitle("Game SOS");
+        //setUndecorated(true);
         this.pack();
         setSize(WIDTH_GAME, HEIGHT_GAME);
         setContentPane();
@@ -31,57 +28,97 @@ public class GUI extends JFrame {
         JRadioButton simpleGame = new JRadioButton("Simple game");
         JRadioButton generalGame = new JRadioButton("General game");
         JTextField sizeBoard = new JTextField();
-
         public GameContent(){
-            addContentConfig();
-            add(new GameBoard());
+            setLayout(new BorderLayout());
+            addContentTop();
+            addContentPlayer("Blue player", BorderLayout.LINE_START);
+            add(new GameBoard(), BorderLayout.CENTER);
+            addContentPlayer("Red player", BorderLayout.LINE_END);
+            addContentBottom();
         }
 
-        private void addContentConfig(){
-            JPanel panelTopContent = new JPanel();
-            panelTopContent.setLayout(new BorderLayout());
-            panelTopContent.setBounds(0,0,WIDTH_GAME,WIDTH_GAME/16);
+        private void addContentBottom(){
+            JPanel panelContent = new JPanel();
+            panelContent.setLayout(new BorderLayout());
+            panelContent.setBorder(new EmptyBorder(20,20,20,20));
 
-            JPanel panelTopContentLeft = new JPanel();
-            panelTopContentLeft.add(new JLabel("SOS"));
-            panelTopContentLeft.add(simpleGame);
-            panelTopContentLeft.add(generalGame);
+            JButton newGame = new JButton("New Game");
 
-            JPanel panelTopContentRigth = new JPanel();
-            panelTopContentRigth.add(new JLabel("Board size"));
+            JLabel turnPlayer = new JLabel("Current turn: blue");
+            turnPlayer.setHorizontalAlignment(JLabel.CENTER);
+
+            panelContent.add(turnPlayer, BorderLayout.CENTER);
+            panelContent.add(newGame, BorderLayout.LINE_END);
+            add(panelContent, BorderLayout.PAGE_END);
+        }
+
+        private void addContentPlayer(String name, String location){
+            JPanel panelContent = new JPanel();
+            panelContent.setBorder(new EmptyBorder(0,50,0,50));
+            panelContent.setLayout(new BoxLayout(panelContent, BoxLayout.Y_AXIS));
+            panelContent.add(Box.createVerticalGlue());
+            panelContent.add(new JLabel(name));
+            panelContent.add(new JRadioButton("S"));
+            panelContent.add(new JRadioButton("O"));
+            panelContent.add(Box.createVerticalGlue());
+            add(panelContent, location);
+        }
+
+        private void addContentTop(){
+            JPanel panelContent = new JPanel();
+            panelContent.setLayout(new BorderLayout());
+
+            JPanel panelContentLeft = new JPanel();
+            panelContentLeft.add(new JLabel("SOS"));
+            panelContentLeft.add(simpleGame);
+            panelContentLeft.add(generalGame);
+
+            JPanel panelContentRigth = new JPanel();
+            panelContentRigth.add(new JLabel("Board size"));
             sizeBoard.setColumns(3);
-            panelTopContentRigth.add(sizeBoard);
+            panelContentRigth.add(sizeBoard);
 
-            panelTopContent.add(panelTopContentLeft, BorderLayout.WEST);
-            panelTopContent.add(panelTopContentRigth, BorderLayout.EAST);
-            add(panelTopContent);
+            panelContent.add(panelContentLeft, BorderLayout.WEST);
+            panelContent.add(panelContentRigth, BorderLayout.EAST);
+            add(panelContent, BorderLayout.PAGE_START);
         }
     }
 
     class GameBoard extends JPanel{
+        JPanel board = new JPanel();
+        ArrayList <JPanel> casillas = new ArrayList<>();
+        GridBagConstraints c = new GridBagConstraints();
         public GameBoard(){
-            int casillas = 3, dimBoard = WIDTH_GAME/2;
-            setSize(dimBoard,dimBoard);
-            setLocation((getWIDTH_GAME()-dimBoard)/2,(getHEIGHT_GAME()-dimBoard)/2);
+            setLayout(new GridBagLayout());
+            int casillas = 8, dimBoard = WIDTH_GAME/2;
+            board.setPreferredSize(new Dimension(dimBoard,dimBoard));
             drawBoard(casillas,casillas);
+            c.fill = GridBagConstraints.NONE;
+            c.gridx = 0;
+            c.gridy = 0;
+            c.weightx = 1.0;
+            c.weighty = 1.0;
+            c.anchor = GridBagConstraints.CENTER;
+            add(board, c);
         }
 
         public void drawBoard(int rows, int columns){
-            removeAll();
-            setLayout(new GridLayout(rows, columns));
+            casillas.clear();
+            board.removeAll();
+            board.setLayout(new GridLayout(rows, columns));
             for(int i=0; i<rows*columns; i++){
                 JPanel panelCelda = new JPanel();
                 panelCelda.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-                add(panelCelda);
+                casillas.add(panelCelda);
+                board.add(panelCelda);
             }
-            revalidate();
-            repaint();
+            board.revalidate();
+            board.repaint();
         }
     }
 
     private void setContentPane() {
         gameContent = new GameContent();
-        gameContent.setLayout(null);
         this.setContentPane(gameContent);
     }
 
@@ -89,4 +126,3 @@ public class GUI extends JFrame {
         new GUI();
     }
 }
-
