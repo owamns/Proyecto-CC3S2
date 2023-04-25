@@ -10,6 +10,10 @@ public class Board {
 
     private int[] score;
 
+    public int[] getScore() {
+        return score;
+    }
+
     public Board(){
         squaresPerSide = 3;
         grid = new char[squaresPerSide][squaresPerSide];
@@ -69,6 +73,18 @@ public class Board {
         if ( score[0] > score[1] ) System.out.println("EL ganador " + 1 + " ha ganado con " + score[0] + " puntos. Felicidades!");
         else if ( score[0] < score[1] ) System.out.println("El ganador " + 2 + " ha ganado con " + score[1] + " puntos. Felicidades!");
         else System.out.println("Es un empate de " + score[1] + "puntos!");
+    }
+
+    public int getWinnerPlayer(){
+        if( score[0] > score[1]){
+            return 1;
+        }
+        else if( score[0] < score[1]){
+            return 2;
+        }
+        else {
+            return 3;
+        }
     }
 
     public boolean isBoardFull(){
