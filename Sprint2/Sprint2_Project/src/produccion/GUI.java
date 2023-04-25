@@ -301,7 +301,8 @@ public class GUI extends JFrame {
                             playerBlueConfig.enableTurnPlayer(true);
                         }
                         if ( gameContent.getSimpleGame().isSelected() && game.howManySOS(casilla.posX, casilla.posY, letterChose) > 0 ) {
-                            JOptionPane.showMessageDialog(null,"El ganador es " + game.getTurn() + ". Felicidades!", "Ganador",JOptionPane.INFORMATION_MESSAGE);
+                            String ganador = (game.getTurn()==1)? playerBlueConfig.getName(): playerRedConfig.getName();
+                            JOptionPane.showMessageDialog(null,"El ganador es " + ganador + ". Felicidades!", "Ganador",JOptionPane.INFORMATION_MESSAGE);
                             drawBoard(game.getSquaresPerSide(), game.getSquaresPerSide());
                         }
                         game.increaseScore(game.getTurn(), game.howManySOS(casilla.posX, casilla.posY, letterChose));
