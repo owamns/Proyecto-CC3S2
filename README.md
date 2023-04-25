@@ -1,7 +1,8 @@
 # Java | SOS game
 
-![Image text](https://github.com/owamns/SOS-game/blob/master/files/Logo.jpeg)
-
+<h1 align="center">
+  <img src="https://raw.githubusercontent.com/carlosgian/Practica1-C3S2/master/files/Logo.jpeg" alt="Logo SOS">
+</h1>
 ---
 ## 🖥️ Tecnologías Utilizadas:
 
