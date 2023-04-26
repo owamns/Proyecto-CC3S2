@@ -71,7 +71,6 @@ public class SOSGameBoard {
             }
             return positions;
         }
-
         public Player[] getPlayers() {
             return players;
         }
