@@ -1,3 +1,7 @@
+package produccion;
+
+import produccion.SOSGameBoard;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
@@ -5,14 +9,13 @@ import java.awt.event.*;
 import java.net.http.HttpResponse;
 import java.nio.file.attribute.FileOwnerAttributeView;
 import java.util.ArrayList;
-public class GUI extends JFrame {
+public class SOSGameGUI extends JFrame {
     private final int HEIGHT_GAME = 650, WIDTH_GAME = 950;
-    private Board game;
+    private SOSGameBoard game;
     private GameContent gameContent;
-    public GUI(Board game){
+    public SOSGameGUI(SOSGameBoard game){
         this.game = game;
         setTitle("Game SOS");
-        //setUndecorated(true);
         this.pack();
         setSize(WIDTH_GAME, HEIGHT_GAME);
         setContentPane();
@@ -158,6 +161,6 @@ public class GUI extends JFrame {
     }
 
     public static void main(String[] args) {
-        new GUI(new Board(3));
+        new SOSGameGUI(new SOSGameBoard(3));
     }
 }
