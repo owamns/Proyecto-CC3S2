@@ -46,26 +46,26 @@ public class SOSGameBoard {
             turn = (getTurn()=='B')? 'R':'B';
         }
 
-        public int[][] positionSOS(int row, int column, char chosen) {
+        public int[] positionSOS(int row, int column, contentBoxes chosen) {
             int[][] around = new int[][]{{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}};
-            int[][] positions = new int[][]{};
+            int[] positions = new int[4];
 
-            if (chosen == 'S') {
+            if (chosen == contentBoxes.LETTER_S) {
                 for (int i = 0; i < 8; i++) {
                     if (getCell(row + around[i][0], column + around[i][1]) == contentBoxes.LETTER_O && getCell(row + 2 * around[i][0], column + 2 * around[i][1]) == contentBoxes.LETTER_S) {
-                        positions[i][0] = row;
-                        positions[i][1] = column;
-                        positions[i][2] = row + 2 * around[i][0];
-                        positions[i][3] = column + 2 * around[i][1];
+                        positions[0] = row;
+                        positions[1] = column;
+                        positions[2] = row + 2 * around[i][0];
+                        positions[3] = column + 2 * around[i][1];
                     }
                 }
-            } else if (chosen == 'O') {
+            } else if (chosen == contentBoxes.LETTER_O) {
                 for (int i = 0; i < 4; i++) {
                     if (getCell(row + around[i][0], column + around[i][1]) == contentBoxes.LETTER_S && getCell(row - around[i][0], column - around[i][1]) == contentBoxes.LETTER_S) {
-                        positions[i][0] = row - around[i][0];
-                        positions[i][1] = column - around[i][1];
-                        positions[i][2] = row + around[i][0];
-                        positions[i][3] = column + around[i][1];
+                        positions[0] = row - around[i][0];
+                        positions[1] = column - around[i][1];
+                        positions[2] = row + around[i][0];
+                        positions[3] = column + around[i][1];
                     }
                 }
             }
