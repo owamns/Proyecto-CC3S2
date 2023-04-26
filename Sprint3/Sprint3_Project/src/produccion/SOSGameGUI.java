@@ -296,6 +296,9 @@ public class SOSGameGUI extends JFrame {
                             game = new SOSGameBoard(game.getSquaresPerSide());
                         }
                         turnPlayer.setText("Current turn: "+((game.getTurn()=='B')? playerBlueConfig.player.getName() : playerRedConfig.player.getName()));
+                        if(game.howManySOS(casilla.getPosX(),casilla.getPosY(),cb)!=0){
+                            drawLines(game.positionSOS(casilla.getPosX(),casilla.getPosY(),cb), casillas);
+                        }
                         if(game.isBoardFull() && gameContent.getSimpleGame().isSelected()){
                             JOptionPane.showMessageDialog(null,"Quedaron en empate", "Empate",JOptionPane.INFORMATION_MESSAGE);
                         }
@@ -305,13 +308,8 @@ public class SOSGameGUI extends JFrame {
                             } else if (playerBlueConfig.player.getScore() < playerRedConfig.player.getScore()) {
                                 JOptionPane.showMessageDialog(null,"El ganador es " + playerRedConfig.player.getName() + ". con "+ playerRedConfig.player.getScore() +" puntos", "Ganador",JOptionPane.INFORMATION_MESSAGE);
                             } else {
-                                System.out.println(playerBlueConfig.player.getScore());
-                                System.out.println(playerRedConfig.player.getScore());
                                 JOptionPane.showMessageDialog(null,"Quedaron en empate", "Empate",JOptionPane.INFORMATION_MESSAGE);
                             }
-                        }
-                        if(game.howManySOS(casilla.getPosX(),casilla.getPosY(),cb)!=0){
-                            drawLines(game.positionSOS(casilla.getPosX(),casilla.getPosY(),cb), casillas);
                         }
                     }
                 }
