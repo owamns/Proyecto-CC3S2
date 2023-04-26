@@ -69,6 +69,34 @@ public class Board {
         score[index] = score[index] + points;
     }
 
+    public int[][] positionSOS(int row, int column, char chosen){
+        int[][] around = new int[][]{ {-1,-1} , {0,-1} , {1,-1} , {-1,0} , {1,0} , {-1,1} , {0,1} , {1,1} } ;
+        int [][] positions = new int[][]{};
+
+        if ( chosen == 'S' ){
+            for( int i = 0; i < 8; i++ ){
+                if( getCell(row + around[i][0],column + around[i][1]) == 'O' && getCell(row + 2*around[i][0],column + 2*around[i][1]) == 'S' ){
+                    positions[i][0] = row;
+                    positions[i][1] = column;
+                    positions[i][2] = row + 2*around[i][0];
+                    positions[i][3] = column + 2*around[i][1];
+                };
+            }
+        }
+
+        else if ( chosen == 'O' ){
+            for( int i = 0; i < 4; i++ ){
+                if( getCell(row + around[i][0],column + around[i][1]) == 'S' && getCell(row - around[i][0],column - around[i][1]) == 'S' ){
+                    positions[i][0] = row - around[i][0];
+                    positions[i][1] = column - around[i][1];
+                    positions[i][2] = row + around[i][0];
+                    positions[i][3] = column + around[i][1];
+                };
+            }
+        }
+        return positions;
+    }
+
     public void getWinner(){
         if ( score[0] > score[1] ) System.out.println("EL ganador " + 1 + " ha ganado con " + score[0] + " puntos. Felicidades!");
         else if ( score[0] < score[1] ) System.out.println("El ganador " + 2 + " ha ganado con " + score[1] + " puntos. Felicidades!");
@@ -111,7 +139,6 @@ public class Board {
             for( int i = 0; i < 4; i++ ){
                 if( getCell(row + around[i][0],column + around[i][1]) == 'S' && getCell(row - around[i][0],column - around[i][1]) == 'S' ) points++;
             }
-
         }
         return points;
     }
