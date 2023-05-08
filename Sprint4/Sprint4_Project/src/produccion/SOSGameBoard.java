@@ -1,5 +1,7 @@
 package produccion;
 
+import java.util.Random;
+
 public class SOSGameBoard {
     public enum Box {EMPTY, LETTER_S, LETTER_O}
 
@@ -56,11 +58,49 @@ public class SOSGameBoard {
 
     public char getGameType(){ return gameType; }
 
+    public Player[] getPlayers(){ return players; }
+
     public void makePlay(int row, int column, Box chosen){
         if ( isPositionInGrid(row, column) ) grid[row][column] = chosen;
         else {
             throw new IllegalArgumentException("El argumento debe estar dentro de los limited del tablero");
         }
+    }
+
+    public int getNumberOfEmptyBoxes(){
+        int counter = 0;
+        for ( int row = 0; row <= squaresPerSide; row++ ){
+            for ( int column = 0; column <=squaresPerSide; column++ ){
+                if(getBox(row, column) == Box.EMPTY) counter++;
+            }
+        }
+        return counter;
+    }
+    public int[] computerPlay() {
+        int numberOfEmptyBoxes = getNumberOfEmptyBoxes();
+
+        Random rng = new Random();
+
+        int randomChoice = rng.nextInt(numberOfEmptyBoxes);
+
+        int chosenInt = rng.nextInt(2);
+        Box chosen = chosenInt == 0 ? Box.LETTER_O : Box.LETTER_S;
+
+        int counter = 0;
+
+        int[] parameters = new int[0];
+        for (int row = 0; row <= squaresPerSide; row++) {
+            for (int column = 0; column <= squaresPerSide; column++) {
+                if (getBox(row, column) == Box.EMPTY) {
+                    if (counter == randomChoice) {
+                        makePlay(row, column, chosen);
+                        parameters = new int[]{row, column, chosenInt};
+                    }
+                    counter++;
+                }
+            }
+        }
+        return parameters;
     }
 
     public void changeActivePlayer(){
@@ -162,11 +202,18 @@ public class SOSGameBoard {
         private String name;
         private int score;
         private char letter;
+
+        private char control;
+
         public Player(String name){
             this.name = name;
             score = 0;
             letter = 'S';
         }
+
+        public char getControl(){ return control; }
+
+        public void setControl(char control){ this.control = control; }
 
         public void setLetter(char letter){
             this.letter = letter;
