@@ -1,5 +1,6 @@
 package produccion;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class SOSGameBoard {
@@ -148,36 +149,26 @@ public class SOSGameBoard {
     the starting coordinates and two for the finishing ones.
     These are the numbers that are in each row of the matrix positions.
     */
-    public int[][] positionSOS(int row, int column, Box chosen) {
+    public ArrayList<SOSLocation> positionSOS(int row, int column, Box chosen) {
         int[][] around = new int[][]{{-1, -1}, {0, -1}, {1, -1}, {-1, 0}, {1, 0}, {-1, 1}, {0, 1}, {1, 1}};
-        int numberOfSOS = howManySOS(row, column, chosen);
-        int[][] positions = new int[numberOfSOS][4];
+        ArrayList<SOSLocation> positions = new ArrayList<>();
 
         if (chosen == Box.LETTER_S) {
-            int j = 0;
             for (int i = 0; i < 8; i++) {
                 if ( detectSOSWhenS(row, column, around[i]) ) {
-                    positions[j][0] = row;
-                    positions[j][1] = column;
-                    positions[j][2] = row + 2 * around[i][0];
-                    positions[j][3] = column + 2 * around[i][1];
-                    j++;
+                    positions.add(new SOSLocation(row,column,row+2*around[i][0],column+2*around[i][1]));
                 }
             }
         } else if (chosen == Box.LETTER_O) {
-            int j = 0;
             for (int i = 0; i < 4; i++) {
                 if ( detectSOSWhenO(row, column, around[i]) ) {
-                    positions[j][0] = row - around[i][0];
-                    positions[j][1] = column - around[i][1];
-                    positions[j][2] = row + around[i][0];
-                    positions[j][3] = column + around[i][1];
-                    j++;
+                    positions.add(new SOSLocation(row - around[i][0],column - around[i][1],row + around[i][0],column + around[i][1]));
                 }
             }
         }
         return positions;
     }
+
 
     public boolean isBoardFull() {
         for (int row = 0; row < squaresPerSide; row++ ){
@@ -198,11 +189,23 @@ public class SOSGameBoard {
         else return null;
     }
 
+    class SOSLocation{
+        private int [] location = new int[4];
+        public SOSLocation(int x1, int y1, int x2, int y2){
+            location[0] = x1;
+            location[1] = y1;
+            location[2] = x2;
+            location[3] = y2;
+        }
+        public int[] getLocation() {
+            return location;
+        }
+    }
+
     class Player{
         private String name;
         private int score;
         private char letter;
-
         private char control;
 
         public Player(String name){
