@@ -18,6 +18,15 @@ public class SOSGameGUI extends JFrame {
     private PlayerConfig playerBlueConfig;
     private PlayerConfig playerRedConfig;
     private JLabel turnPlayer;
+
+    public PlayerConfig getPlayerBlueConfig() {
+        return playerBlueConfig;
+    }
+
+    public SOSGameBoard getGame(){
+        return game;
+    }
+
     public SOSGameGUI(SOSGameBoard game){
         this.game = game;
         playerBlueConfig = new PlayerConfig(game.getPlayers()[0]);
@@ -32,12 +41,17 @@ public class SOSGameGUI extends JFrame {
         setVisible(true);
     }
 
+    public GameContent getGameContent() {
+        return gameContent;
+    }
+
     class GameContent extends JPanel{
         private final JRadioButton simpleGame = new JRadioButton("Simple game");
         private final JRadioButton generalGame = new JRadioButton("General game");
         private JTextField sizeBoard = new JTextField();
         private final JButton newGame = new JButton("New Game");
         private final JButton startGame = new JButton("Start Game");
+
         public JRadioButton getSimpleGame() {
             return simpleGame;
         }
