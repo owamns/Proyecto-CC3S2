@@ -20,7 +20,7 @@ public class SOSGameConsole {
 
     }
 
-    private char toLetter(SOSGameBoard.Box box){
+    public char toLetter(SOSGameBoard.Box box){
         if (box == SOSGameBoard.Box.LETTER_S) return 'S';
         else if(box == SOSGameBoard.Box.LETTER_O) return 'O';
         else return ' ';
