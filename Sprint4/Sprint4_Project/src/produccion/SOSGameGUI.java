@@ -458,6 +458,12 @@ public class SOSGameGUI extends JFrame {
                             changeEnableTurnPLayer();
                             game.changeActivePlayer();
                         }
+                        if(playerBlueConfig.computerPlayer.isSelected()){
+                            playerBlueConfig.enableTurnPlayer(false);
+                        }
+                        if(playerRedConfig.computerPlayer.isSelected()){
+                            playerRedConfig.enableTurnPlayer(false);
+                        }
                         turnPlayer.setText("Current turn: "+game.getActivePlayer().getName());
                         if(game.howManySOS(casilla.getPosX(),casilla.getPosY(),cb)==1){
                             drawLines(game.positionSOS(casilla.getPosX(),casilla.getPosY(),cb).get(0).getLocation(),casillas);
