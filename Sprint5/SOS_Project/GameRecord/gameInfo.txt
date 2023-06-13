@@ -1,0 +1,6 @@
+Type Game: Simple	Board Size: 3
+Name Player: BluePlayer	Mode Player: Human
+Name Player: RedPlayer	Mode Player: Human
+Type Game: General	Board Size: 4
+Name Player: BluePlayer	Mode Player: Computer	Score: 2
+Name Player: RedPlayer	Mode Player: Computer	Score: 2
