@@ -32,4 +32,6 @@
 <h1 align="center">
   <img src="https://raw.githubusercontent.com/carlosgian/Practica1-C3S2/master/files/Gif_Juego.gif" alt="Juego Simple">
 </h1>
-#### 🔹 Sprint4/Sprint4_Project/src/produccion/: Carpeta donde se encuentra el juego con una interfaz grafica con nueva funcionalidad.
+
+#### 🔹 Sprint4/Sprint4_Project/src/produccion/: Carpeta donde se encuentra el juego con interfaz grafica con nueva funcionalidad.
+#### 🔹 Sprint5/SOS_Project/src/: Carpeta donde se encuentra el juego con interfaz grafica con nueva funcionalidad de replay y record game.
